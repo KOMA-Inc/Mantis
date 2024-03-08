@@ -1,20 +1,10 @@
-//
-//  CropViewProtocol.swift
-//  Mantis
-//
-//  Created by yingtguo on 12/15/22.
-//
-
 import Foundation
 import UIKit
 
-public protocol ActivityIndicatorProtocol: UIView {
-    func startAnimating()
-    func stopAnimating()
-}
 
-protocol CropViewProtocol: UIView {
-    var image: UIImage { get set }
+
+protocol AbstractCropViewProtocol: UIView {
+    var view: UIView { get set }
     var aspectRatioLockEnabled: Bool { get set }
     var delegate: CropViewDelegate? { get set }
     
@@ -35,27 +25,18 @@ protocol CropViewProtocol: UIView {
     func getTransformInfo(byTransformInfo transformInfo: Transformation) -> Transformation
     func getTransformInfo(byNormalizedInfo normalizedInfo: CGRect) -> Transformation
     func processPresetTransformation(completion: (Transformation?) -> Void)
-        
+    
     func setFreeCrop()
-    func horizontallyFlip()
-    func verticallyFlip()
     func reset()
-    func crop() -> CropOutput
-    func crop(_ image: UIImage) -> CropOutput
-    func asyncCrop(completion: @escaping (CropOutput) -> Void)
     
     func getCropInfo() -> CropInfo
-    func getExpectedCropImageSize() -> CGSize
-    
-    func rotate(by angle: Angle)
-    func makeTransformation() -> Transformation
 }
 
-extension CropViewProtocol {
+extension AbstractCropViewProtocol {
     func setViewDefaultProperties() {
         clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     func rotate(by angle: Angle) {}
 }

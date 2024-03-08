@@ -40,13 +40,13 @@ public struct Config {
         
     public var cropMode: CropMode = .sync
     
-    public var cropViewConfig = CropViewConfig()    
+    public var cropViewConfig = CropViewConfig()
     public var cropToolbarConfig = CropToolbarConfig()
     
     public var ratioOptions: RatioOptions = .all
     public var presetFixedRatioType: PresetFixedRatioType = .canUseMultiplePresetFixedRatio()
     public var showAttachedCropToolbar = true
-    
+
     public private(set) var localizationConfig = Mantis.localizationConfig
     
     var customRatios: [(width: Int, height: Int)] = []

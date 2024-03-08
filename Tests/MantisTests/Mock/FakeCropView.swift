@@ -70,7 +70,7 @@ class FakeCropView: UIView, CropViewProtocol {
         Transformation(.zero, .zero, .zero, false, .zero, .zero, .zero, false, false)
     }
     
-    func processPresetTransformation(completion: (Transformation) -> Void) {
+    func processPresetTransformation(completion: (Transformation?) -> Void) {
         
     }
     

@@ -34,7 +34,7 @@ public struct CropViewConfig {
     public var cropAuxiliaryIndicatorStyle: CropAuxiliaryIndicatorStyleType = .normal
     
     public var presetTransformationType: PresetTransformationType = .none
-    
+
     public var minimumZoomScale: CGFloat = 1 {
         didSet {
             assert(minimumZoomScale >= 1)

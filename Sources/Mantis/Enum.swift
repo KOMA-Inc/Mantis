@@ -35,6 +35,7 @@ public enum PresetFixedRatioType {
      */
     case alwaysUsingOnePresetFixedRatio(ratio: Double = 0)
     case canUseMultiplePresetFixedRatio(defaultRatio: Double = 0)
+    case canUseMultiplePresetRatio(ratio: Double)
 }
 
 public enum CropMaskVisualEffectType {

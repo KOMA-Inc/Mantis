@@ -95,10 +95,14 @@ open class CropViewController: UIViewController {
             
             cropView.processPresetTransformation { [weak self] transformation in
                 guard let self = self else { return }
-                if case .alwaysUsingOnePresetFixedRatio(let ratio) = self.config.presetFixedRatioType {
+                
+                if let transformation,
+                   case .alwaysUsingOnePresetFixedRatio(let ratio) = self.config.presetFixedRatioType {
                     self.cropToolbar.handleFixedRatioSetted(ratio: ratio)
                     self.cropView.handlePresetFixedRatio(ratio, transformation: transformation)
                 }
+
+                cropView.resetAspectRatioLockEnabled(by: config.presetFixedRatioType)
             }
         }
     }
@@ -179,6 +183,11 @@ private extension CropViewController {
                 }
                 
                 config.cropToolbarConfig.includeFixedRatiosSettingButton = true
+
+        case .canUseMultiplePresetRatio(let ratio):
+            if ratio > 0 {
+                setFixedRatio(ratio)
+            }
         }
         
         cropToolbar.createToolbarUI(config: config.cropToolbarConfig)

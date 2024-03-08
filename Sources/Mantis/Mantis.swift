@@ -93,6 +93,34 @@ private(set) var bundle: Bundle? = {
     return Mantis.Config.bundle
 }()
 
+public extension AbstractCropView {
+    static func buildCropView(
+        withView view: UIView,
+        config cropViewConfig: CropViewConfig,
+        rotationControlView: RotationControlViewProtocol? = nil
+    ) -> AbstractCropView {
+        let cropAuxiliaryIndicatorView = CropAuxiliaryIndicatorView(
+            frame: .zero,
+            cropBoxHotAreaUnit: cropViewConfig.cropBoxHotAreaUnit,
+            disableCropBoxDeformation: cropViewConfig.disableCropBoxDeformation,
+            style: cropViewConfig.cropAuxiliaryIndicatorStyle
+        )
+        let imageContainer = ViewContainer(view: view)
+        let cropView = AbstractCropView(
+            view: view,
+            cropViewConfig: cropViewConfig,
+            viewModel: buildCropViewModel(with: cropViewConfig),
+            cropAuxiliaryIndicatorView: cropAuxiliaryIndicatorView,
+            imageContainer: imageContainer,
+            cropWorkbenchView: buildCropWorkbenchView(with: cropViewConfig, and: imageContainer),
+            cropMaskViewManager: buildCropMaskViewManager(with: cropViewConfig)
+        )
+
+//        setupRotationControlViewIfNeeded(withConfig: cropViewConfig, cropView: cropView, rotationControlView: rotationControlView)
+        return cropView
+    }
+}
+
 private func buildCropView(withImage image: UIImage,
                            config cropViewConfig: CropViewConfig,
                            rotationControlView: RotationControlViewProtocol?) -> CropViewProtocol {
