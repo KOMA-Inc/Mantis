@@ -228,7 +228,18 @@ final class CropView: UIView {
             setFixedRatioCropBox()
         }
     }
-    
+
+    func resetAspectRatioLockEnabled(by presetFixedRatioType: PresetFixedRatioType) {
+        switch presetFixedRatioType {
+        case .alwaysUsingOnePresetFixedRatio:
+            aspectRatioLockEnabled = true
+        case .canUseMultiplePresetFixedRatio:
+            aspectRatioLockEnabled = true
+        case .canUseMultiplePresetRatio:
+            aspectRatioLockEnabled = false
+        }
+    }
+
     private func setupCropWorkbenchView() {
         cropWorkbenchView.touchesBegan = { [weak self] in
             self?.viewModel.setTouchImageStatus()
@@ -803,12 +814,15 @@ extension CropView {
 }
 
 extension CropView: CropViewProtocol {
+    
     private func setForceFixedRatio(by presetFixedRatioType: PresetFixedRatioType) {
         switch presetFixedRatioType {
         case .alwaysUsingOnePresetFixedRatio:
             forceFixedRatio = true
         case .canUseMultiplePresetFixedRatio(let defaultRatio):
             forceFixedRatio = defaultRatio > 0
+        case .canUseMultiplePresetRatio:
+            forceFixedRatio = true
         }
     }
     
@@ -1047,7 +1061,7 @@ extension CropView: CropViewProtocol {
         return transformation
     }
     
-    func processPresetTransformation(completion: (Transformation) -> Void) {
+    func processPresetTransformation(completion: (Transformation?) -> Void) {
         switch cropViewConfig.presetTransformationType {
         case .presetInfo(let transformInfo):
             viewModel.horizontallyFlip = transformInfo.horizontallyFlipped
@@ -1078,7 +1092,7 @@ extension CropView: CropViewProtocol {
             cropWorkbenchView.frame = transformInfo.maskFrame
             completion(transformInfo)
         case .none:
-            break
+            completion(nil)
         }
     }
     

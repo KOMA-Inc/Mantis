@@ -33,12 +33,13 @@ protocol CropViewProtocol: UIView {
     func transform(byTransformInfo transformation: Transformation, isUpdateRotationControlView: Bool)
     func getTransformInfo(byTransformInfo transformInfo: Transformation) -> Transformation
     func getTransformInfo(byNormalizedInfo normalizedInfo: CGRect) -> Transformation
-    func processPresetTransformation(completion: (Transformation) -> Void)
+    func processPresetTransformation(completion: (Transformation?) -> Void)
         
     func setFreeCrop()
     func horizontallyFlip()
     func verticallyFlip()
     func reset()
+    func resetAspectRatioLockEnabled(by presetFixedRatioType: PresetFixedRatioType)
     func crop() -> CropOutput
     func crop(_ image: UIImage) -> CropOutput
     func asyncCrop(completion: @escaping (CropOutput) -> Void)

@@ -25,4 +25,8 @@ extension UIView {
         
         return nil
     }
+
+    func horizontalToVerticalRatio() -> CGFloat {
+        bounds.size.width / bounds.size.height
+    }
 }
