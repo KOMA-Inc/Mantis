@@ -93,6 +93,27 @@ private(set) var bundle: Bundle? = {
     return Mantis.Config.bundle
 }()
 
+public extension FixedCropFrameView {
+    static func buildCropView(
+        withView view: UIView,
+        config cropViewConfig: CropViewConfig,
+        rotationControlView: RotationControlViewProtocol? = nil
+    ) -> FixedCropFrameView {
+
+        let imageContainer = ViewContainer(view: view)
+        let cropView = FixedCropFrameView(
+            view: view,
+            cropViewConfig: cropViewConfig,
+            viewModel: buildCropViewModel(with: cropViewConfig),
+            imageContainer: imageContainer,
+            cropWorkbenchView: buildCropWorkbenchView(with: cropViewConfig, and: imageContainer),
+            cropMaskViewManager: buildCropMaskViewManager(with: cropViewConfig)
+        )
+
+        return cropView
+    }
+}
+
 private func buildCropView(withImage image: UIImage,
                            config cropViewConfig: CropViewConfig,
                            rotationControlView: RotationControlViewProtocol?) -> CropViewProtocol {

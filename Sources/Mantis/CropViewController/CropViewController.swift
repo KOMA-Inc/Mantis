@@ -375,7 +375,7 @@ private extension CropViewController {
     }
 }
 
-extension CropViewController: CropViewDelegate {    
+extension CropViewController: CropViewDelegate {
     func cropViewDidBecomeResettable(_ cropView: CropViewProtocol) {
         cropToolbar.handleCropViewDidBecomeResettable()
         delegate?.cropViewControllerDidImageTransformed(self)
