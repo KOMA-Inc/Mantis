@@ -174,7 +174,7 @@ public final class FixedCropFrameView: UIView {
         case .alwaysUsingOnePresetFixedRatio:
             aspectRatioLockEnabled = true
         case .canUseMultiplePresetFixedRatio:
-            aspectRatioLockEnabled = true
+            aspectRatioLockEnabled = false
         case .canUseMultiplePresetRatio:
             aspectRatioLockEnabled = false
         }
