@@ -100,6 +100,8 @@ open class CropViewController: UIViewController {
                     self.cropToolbar.handleFixedRatioSetted(ratio: ratio)
                     self.cropView.handlePresetFixedRatio(ratio, transformation: transformation)
                 }
+
+                cropView.resetAspectRatioLockEnabled(by: config.presetFixedRatioType)
             }
         }
     }
@@ -224,7 +226,7 @@ private extension CropViewController {
     func handleCancel() {
         delegate?.cropViewControllerDidCancel(self, original: cropView.image)
     }
-    
+
     func resetRatioButton() {
         cropView.setFreeCrop()
         cropToolbar.handleFixedRatioUnSetted()
