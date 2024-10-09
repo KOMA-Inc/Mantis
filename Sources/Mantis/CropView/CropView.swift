@@ -59,6 +59,7 @@ final class CropView: UIView {
     }
     
     var isManuallyZoomed = false
+    var isManuallyResized = false // Indicates the fact of zooming only by user's pinch gesture.
     var forceFixedRatio = false
     var checkForForceFixedRatioFlag = false
     let cropViewConfig: CropViewConfig
@@ -672,6 +673,7 @@ extension CropView {
             rotation: getTotalRadians(),
             scale: cropWorkbenchView.zoomScale,
             isManuallyZoomed: isManuallyZoomed,
+            isManuallyResized: isManuallyResized,
             initialMaskFrame: getInitialCropBoxRect(),
             maskFrame: cropAuxiliaryIndicatorView.frame,
             cropWorkbenchViewBounds: cropWorkbenchView.bounds,
@@ -1049,15 +1051,18 @@ extension CropView: CropViewProtocol {
         }
         
         let isManuallyZoomed = (scale != 1.0)
-        let transformation = Transformation(offset: offset,
-                                            rotation: 0,
-                                            scale: scale,
-                                            isManuallyZoomed: isManuallyZoomed,
-                                            initialMaskFrame: .zero,
-                                            maskFrame: maskFrame,
-                                            cropWorkbenchViewBounds: .zero,
-                                            horizontallyFlipped: viewModel.horizontallyFlip,
-                                            verticallyFlipped: viewModel.verticallyFlip)
+        let transformation = Transformation(
+            offset: offset,
+            rotation: 0,
+            scale: scale,
+            isManuallyZoomed: isManuallyZoomed,
+            isManuallyResized: isManuallyResized,
+            initialMaskFrame: .zero,
+            maskFrame: maskFrame,
+            cropWorkbenchViewBounds: .zero,
+            horizontallyFlipped: viewModel.horizontallyFlip,
+            verticallyFlipped: viewModel.verticallyFlip
+        )
         return transformation
     }
     

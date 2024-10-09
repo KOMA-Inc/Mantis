@@ -29,6 +29,7 @@ public typealias Transformation = (
     rotation: CGFloat,
     scale: CGFloat,
     isManuallyZoomed: Bool,
+    isManuallyResized: Bool,
     initialMaskFrame: CGRect,
     maskFrame: CGRect,
     cropWorkbenchViewBounds: CGRect,
