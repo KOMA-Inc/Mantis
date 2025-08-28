@@ -80,6 +80,7 @@ extension CropView {
         }
         
         if viewModel.needCrop() {
+            isManuallyResized = true
             cropAuxiliaryIndicatorView.handleEdgeUntouched()
             let contentRect = getContentBounds()
             adjustUIForNewCrop(contentRect: contentRect) {[weak self] in

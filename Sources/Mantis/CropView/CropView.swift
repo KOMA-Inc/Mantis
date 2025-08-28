@@ -58,8 +58,11 @@ final class CropView: UIView {
         }
     }
     
+    var isZoomed = false
     var isManuallyZoomed = false
-    var isManuallyResized = false // Indicates the fact of zooming only by user's pinch gesture.
+    var isManuallyResized = false
+    var isManuallyRotated = false
+    var isManuallyRotatedBy90Degrees = false
     var forceFixedRatio = false
     var checkForForceFixedRatioFlag = false
     let cropViewConfig: CropViewConfig
@@ -284,6 +287,7 @@ final class CropView: UIView {
         rotationControlView.isUserInteractionEnabled = true
         
         rotationControlView.didUpdateRotationValue = { [unowned self] angle in
+            self.isManuallyRotated = true
             self.viewModel.setTouchRotationBoardStatus()
             self.viewModel.setRotatingStatus(by: clampAngle(angle))
         }
@@ -599,7 +603,7 @@ extension CropView {
             completion()
         }
         
-        isManuallyZoomed = true
+        isZoomed = true
     }
     
     func makeSureImageContainsCropOverlay() {
@@ -614,9 +618,9 @@ extension CropView {
         
         cropWorkbenchView.updateLayout(byNewSize: CGSize(width: width, height: height))
         
-        if !isManuallyZoomed || cropWorkbenchView.shouldScale() {
+        if !isZoomed || cropWorkbenchView.shouldScale() {
             cropWorkbenchView.zoomScaleToBound(animated: false)
-            isManuallyZoomed = false
+            isZoomed = false
         } else {
             cropWorkbenchView.updateMinZoomScale()
         }
@@ -672,8 +676,11 @@ extension CropView {
             offset: cropWorkbenchView.contentOffset,
             rotation: getTotalRadians(),
             scale: cropWorkbenchView.zoomScale,
+            isZoomed: isZoomed,
             isManuallyZoomed: isManuallyZoomed,
             isManuallyResized: isManuallyResized,
+            isManuallyRotated: isManuallyRotated,
+            isManuallyRotatedBy90Degrees: isManuallyRotatedBy90Degrees,
             initialMaskFrame: getInitialCropBoxRect(),
             maskFrame: cropAuxiliaryIndicatorView.frame,
             cropWorkbenchViewBounds: cropWorkbenchView.bounds,
@@ -901,7 +908,8 @@ extension CropView: CropViewProtocol {
     
     func rotateBy90(withRotateType rotateType: RotateBy90DegreeType, completion: @escaping () -> Void = {}) {
         viewModel.setDegree90RotatingStatus()
-        
+        isManuallyRotatedBy90Degrees = true
+
         var newRotateType = rotateType
         
         if viewModel.horizontallyFlip {
@@ -979,7 +987,7 @@ extension CropView: CropViewProtocol {
             cropWorkbenchView.bounds = transformation.cropWorkbenchViewBounds
         }
         
-        isManuallyZoomed = transformation.isManuallyZoomed
+        isZoomed = transformation.isManuallyZoomed
         cropWorkbenchView.zoomScale = transformation.scale
         cropWorkbenchView.contentOffset = transformation.offset
         viewModel.setBetweenOperationStatus()
@@ -1050,13 +1058,16 @@ extension CropView: CropViewProtocol {
             maskFrame.origin.x += (cropFrame.width - maskFrame.width) / 2
         }
         
-        let isManuallyZoomed = (scale != 1.0)
+        let isZoomed = (scale != 1.0)
         let transformation = Transformation(
             offset: offset,
             rotation: 0,
             scale: scale,
+            isZoomed: isZoomed,
             isManuallyZoomed: isManuallyZoomed,
             isManuallyResized: isManuallyResized,
+            isManuallyRotated: isManuallyRotated,
+            isManuallyRotatedBy90Degrees: isManuallyRotatedBy90Degrees,
             initialMaskFrame: .zero,
             maskFrame: maskFrame,
             cropWorkbenchViewBounds: .zero,

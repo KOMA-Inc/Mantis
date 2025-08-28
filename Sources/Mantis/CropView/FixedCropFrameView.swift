@@ -20,7 +20,7 @@ public final class FixedCropFrameView: UIView {
         }
     }
 
-    var isManuallyZoomed = false
+    var isZoomed = false
     var forceFixedRatio = false
     var checkForForceFixedRatioFlag = false
     let cropViewConfig: CropViewConfig
@@ -510,13 +510,13 @@ extension FixedCropFrameView {
             completion()
         }
 
-        isManuallyZoomed = true
+        isZoomed = true
     }
 
     private func adjustWorkbenchView(by radians: CGFloat) {
-        if !isManuallyZoomed || cropWorkbenchView.shouldScale() {
+        if !isZoomed || cropWorkbenchView.shouldScale() {
             cropWorkbenchView.zoomScaleToBound(animated: false)
-            isManuallyZoomed = false
+            isZoomed = false
         } else {
             cropWorkbenchView.updateMinZoomScale()
         }
