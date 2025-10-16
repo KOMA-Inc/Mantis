@@ -89,6 +89,10 @@ open class CropViewController: UIViewController {
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if initialLayout == false {
+            guard cropView.bounds.size != .zero else {
+                return
+            }
+
             initialLayout = true
             view.layoutIfNeeded()
             cropView.resetComponents()
@@ -361,6 +365,7 @@ private extension CropViewController {
         guard config.showAttachedCropToolbar else {
             stackView?.removeArrangedSubview(cropStackView)
             stackView?.addArrangedSubview(cropStackView)
+            view.layoutIfNeeded()
             return
         }
         
