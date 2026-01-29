@@ -411,6 +411,9 @@ extension CropViewController: CropViewDelegate {
                                                  original: cropView.image,
                                                  cropInfo: cropView.getCropInfo())
     }
+    func didUpdateCropBoxFrame(frame: CGRect) {
+        delegate?.cropViewController(self, didUpdateCropBoxFrame: frame)
+    }
 }
 
 extension CropViewController: CropToolbarDelegate {

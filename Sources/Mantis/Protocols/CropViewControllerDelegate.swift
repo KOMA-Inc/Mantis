@@ -24,6 +24,7 @@ public protocol CropViewControllerDelegate: AnyObject {
     func cropViewControllerDidImageTransformed(_ cropViewController: CropViewController, transformation: Transformation)
     
     func cropViewController(_ cropViewController: CropViewController, didBecomeResettable resettable: Bool)
+    func cropViewController(_ cropViewController: CropViewController, didUpdateCropBoxFrame frame: CGRect)
 }
 
 public extension CropViewControllerDelegate {
@@ -33,4 +34,5 @@ public extension CropViewControllerDelegate {
     func cropViewControllerDidImageTransformed(_ cropViewController: CropViewController) {}
     func cropViewControllerDidImageTransformed(_ cropViewController: CropViewController, transformation: Transformation) {}
     func cropViewController(_ cropViewController: CropViewController, didBecomeResettable resettable: Bool) {}
+    func cropViewController(_ cropViewController: CropViewController, didUpdateCropBoxFrame frame: CGRect) {}
 }

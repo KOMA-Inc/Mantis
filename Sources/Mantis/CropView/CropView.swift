@@ -29,6 +29,7 @@ protocol CropViewDelegate: AnyObject {
     func cropViewDidBecomeUnResettable(_ cropView: CropViewProtocol)
     func cropViewDidBeginResize(_ cropView: CropViewProtocol)
     func cropViewDidEndResize(_ cropView: CropViewProtocol)
+    func didUpdateCropBoxFrame( frame: CGRect)
 }
 
 final class CropView: UIView {
@@ -123,6 +124,7 @@ final class CropView: UIView {
         
         viewModel.cropBoxFrameChanged = { [weak self] cropBoxFrame in
             self?.handleCropBoxFrameChange(cropBoxFrame)
+            self?.delegate?.didUpdateCropBoxFrame(frame: cropBoxFrame)
         }
         
         viewModel.setInitialStatus()
